@@ -1,0 +1,27 @@
+version: '{branch}-{build}'
+branches:
+  only:
+    - wheel
+environment:
+  matrix:
+    - PYTHON: "C:/Python27-x64"
+    - PYTHON: "C:/Python35-x64"
+    - PYTHON: "C:/Python36-x64"
+    - PYTHON: "C:/Python37-x64"
+    - PYTHON: "C:/Python38-x64"
+    - PYTHON: "C:/Python39-x64"
+    - PYTHON: "C:/Python27"
+    - PYTHON: "C:/Python35"
+    - PYTHON: "C:/Python36"
+    - PYTHON: "C:/Python37"
+    - PYTHON: "C:/Python38"
+    - PYTHON: "C:/Python39"
+build_script:
+- cmd: |
+    "%PYTHON%/python.exe" -m pip install --upgrade pip
+    "%PYTHON%/python.exe" -m pip install --upgrade setuptools wheel numpy
+    "%PYTHON%/python.exe" setup.py build
+    "%PYTHON%/python.exe" setup.py bdist_wheel
+artifacts:
+  - path: wheel\dist\*.whl
+    name: wheels
