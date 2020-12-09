@@ -3,6 +3,7 @@ image: Visual Studio 2019
 branches:
   only:
     - wheel
+    - /v\d*\.\d*\.\d*/
 environment:
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
@@ -31,12 +32,12 @@ artifacts:
 deploy_script:
   - ps: |
         &"${Env:PYTHON}/python.exe" -m pip install twine
-        &"${Env:PYTHON}/python.exe" -m twine upload -r testpypi -u ${Env:TESTPYPI_USER} -p ${Env:TESTPYPI_PASS} --skip-existing dist/*.whl
+        &"${Env:PYTHON}/python.exe" -m twine upload -u ${Env:PYPI_USER} -p ${Env:PYPI_PASS} --skip-existing dist/*.whl
 #  - ps: |
 #      if($env:APPVEYOR_REPO_TAG -eq 'true') {
 #        Write-Output ("Deploying " + $env:APPVEYOR_REPO_TAG_NAME + " to PyPI...")
 #        &"${Env:PYTHON}/python.exe" -m pip install twine
-#        &"${Env:PYTHON}/python.exe" -m twine upload -r testpypi -u ${Env:TESTPYPI_USER} -p ${Env:TESTPYPI_PASS} --skip-existing dist/*.whl
+#        &"${Env:PYTHON}/python.exe" -m twine upload -u ${Env:PYPI_USER} -p ${Env:PYPI_PASS} --skip-existing dist/*.whl
 #      } else {
 #        Write-Output "No tag for deployment"
 #      }
